@@ -97,3 +97,12 @@ For substantial work, append:
   `-medium` aliases on the same tier.
 - **Alternatives rejected:** Monolithic SKILL-only GPT section without `spec/` +
   `adapters/` split (rejected — harder to extend for future model families).
+
+### 2026-07-10 - Cursor - Rollout sync (engine, silja, symlink)
+
+- **Goal:** Complete portable spec rollout after OSS commit — engine copy, Claude symlink, silja vendor.
+- **Changed paths:** (external) `MFC/vaoa-os/engine/skills/dirigent/**`, `engine/scripts/silja-vendor.manifest`, `MFC/siljajanina.com/.claude/skills/dirigent/**`, `~/.claude/skills/dirigent` symlink.
+- **Checks run:** `tests/agent-surface-test.sh`, `tests/adapter-test.sh` (oss); `tests/adapter-test.sh` (engine); `diff` oss vs engine payload.
+- **Open points:** Push still pending (`main` ahead of origin). vaoa-os + siljajanina commits separate.
+- **Uncertain assumptions:** Engine `agent-surface-test.sh` expects full OSS repo root (AGENTS.md) — run surface tests from oss only.
+- **Alternatives rejected:** Symlink to engine copy instead of oss (rejected — oss is publish SoT).
