@@ -21,14 +21,23 @@ dirigent/
 |-- LICENSE                   # MIT license
 |-- PROJECT_STRUCTURE.md      # This file-first index
 |-- README.md                 # Public overview and install guide
-|-- SKILL.md                  # Distributed Claude Code skill content
+|-- SKILL.md                  # Distributed skill doctrine (entry point)
+|-- adapters/
+|   |-- claude.yaml              # Claude Code: opus / sonnet / haiku
+|   |-- codex-gpt-5.6.yaml       # Codex: gpt-5.6-sol / terra / luna
+|   `-- cursor-gpt-5.6.yaml    # Cursor Task: gpt-5.6-*-medium slugs
+|-- spec/
+|   |-- capability-tiers.md    # Portable capability tier definitions
+|   `-- mapping-table.md       # Cross-runtime tier equivalence
 `-- tests/
-    `-- agent-surface-test.sh # Verifies required agent surfaces
+    |-- agent-surface-test.sh  # Verifies required agent surfaces
+    `-- adapter-test.sh        # Verifies adapter + spec structure
 ```
 
 ## Ownership Boundaries
 
-- Product behavior lives in `SKILL.md`.
+- Product behavior lives in `SKILL.md`, with portable tier definitions in `spec/` and
+  runtime model slugs in `adapters/`.
 - Public positioning and install instructions live in `README.md`.
 - Agent maintenance rules live in `AGENTS.md`.
 - Current repo state lives in `AGENT_HANDOFF.md`.
@@ -51,10 +60,11 @@ Allowed checks for excluded paths: existence, counts, sizes, and classification.
 
 ## Verification
 
-Focused check:
+Focused checks:
 
 ```bash
 tests/agent-surface-test.sh
+tests/adapter-test.sh
 ```
 
 If shell scripts are added or edited, run `bash -n` on the changed scripts.

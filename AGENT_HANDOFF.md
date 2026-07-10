@@ -49,3 +49,51 @@ For substantial work, append:
   distribution unless a future package explicitly adds plugin packaging or CI.
 - **Alternatives rejected:** No product doctrine rewrite, no SessionStart
   automation change, no install-flow execution, and no broad OSS repo sweep.
+
+### 2026-07-10 - Cursor - GPT-5.6 portable adapters
+
+- **Goal:** Add portable capability tiers and GPT-5.6 (Sol/Terra/Luna) runtime
+  adapters for Codex and Cursor; refactor SKILL.md to reference adapters instead
+  of hard-coded Claude slugs only.
+- **Changed paths:**
+  - `SKILL.md`
+  - `README.md`
+  - `PROJECT_STRUCTURE.md`
+  - `spec/capability-tiers.md`
+  - `spec/mapping-table.md` (new)
+  - `adapters/claude.yaml` (new)
+  - `adapters/codex-gpt-5.6.yaml` (new)
+  - `adapters/cursor-gpt-5.6.yaml` (new)
+  - `tests/adapter-test.sh` (new)
+  - `tests/agent-surface-test.sh`
+- **Checks run:** `bash -n tests/*.sh`; `tests/agent-surface-test.sh`;
+  `tests/adapter-test.sh`
+- **Open points:** `MFC/vaoa-os/engine/skills/dirigent/SKILL.md` and vendored
+  copies (siljajanina) not synced — separate vendor-silja / engine sync task.
+  No commit/push.
+- **Uncertain assumptions:** Cursor `*-medium` slugs are composite tier+effort
+  ids, not separate capability tiers; Codex canonical slugs omit the suffix.
+- **Alternatives rejected:** Merging tier and reasoning effort into one routing
+  dimension; putting model slugs into `spec/capability-tiers.md`.
+
+### 2026-07-10 - Cursor - GPT-5.6 adapter + portable tier spec
+
+- **Goal:** Add runtime-agnostic capability tiers and GPT-5.6 Sol/Terra/Luna Codex
+  adapter alongside existing Claude mapping; keep tier doctrine out of model slugs.
+- **Changed paths:**
+  - `SKILL.md`
+  - `README.md`
+  - `PROJECT_STRUCTURE.md`
+  - `spec/capability-tiers.md`
+  - `adapters/claude.yaml`
+  - `adapters/codex-gpt-5.6.yaml`
+  - `tests/agent-surface-test.sh`
+- **Checks run:** `bash -n tests/agent-surface-test.sh`; `tests/agent-surface-test.sh`
+- **Open points:** `~/.claude/skills/dirigent` still symlinks to
+  `MFC/vaoa-os/engine/skills/dirigent`, not `oss/dirigent` — engine/silja copies
+  need manual re-sync after OSS publish. No commit/push performed.
+- **Uncertain assumptions:** Codex dispatch slugs are `gpt-5.6-{sol,terra,luna}`
+  without `-medium` suffix per `~/.codex/models_cache.json`; Cursor may use
+  `-medium` aliases on the same tier.
+- **Alternatives rejected:** Monolithic SKILL-only GPT section without `spec/` +
+  `adapters/` split (rejected — harder to extend for future model families).
