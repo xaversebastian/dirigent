@@ -1,0 +1,32 @@
+# Claude Code runtime adapter
+# Verified against Claude Code 2.1.185 --help on 2026-07-10.
+
+runtime: claude-code
+description: Claude Code aliases for worker dispatch
+
+tiers:
+  reasoning-high:
+    dispatch: fable
+    profile: frontier-highest
+    alternatives:
+      high-reasoning: opus
+    notes: Fable and Opus are distinct models in the same high capability class.
+
+  balanced:
+    dispatch: sonnet
+    profile: balanced
+
+  mechanical:
+    dispatch: sonnet
+    profile: balanced-fallback
+    fallback: lead-sequential
+    notes: No lower-capability alias is asserted by the verified local CLI help.
+
+dispatch:
+  parameter: model
+  override: when-supported
+  allowed:
+    - fable
+    - opus
+    - sonnet
+  explore_default: sonnet

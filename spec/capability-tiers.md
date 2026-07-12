@@ -1,15 +1,16 @@
 # Capability tiers (portable)
 
-Runtime-agnostic routing tiers for dirigent. Model names live only in
-`adapters/` — this file defines *what* each tier is for, not *which* slug to
-dispatch.
+Runtime-agnostic routing tiers for dirigent. This file defines what capability
+each task block needs, independently of concrete execution surfaces.
 
 ## Lead (conductor)
 
 The main session itself. Never dispatched as a worker.
 
+- Research of task context, constraints, and current state
 - Detailed planning and task decomposition
 - Architecture decisions and trade-off judgements
+- Sequential execution when no compatible worker is available
 - Review and synthesis of every worker output
 - Delicate or user-facing copy, security-critical calls
 
@@ -34,12 +35,13 @@ sharpened context.
 ## Dispatch rule
 
 1. Pick the capability tier for the block (table above).
-2. Resolve the tier to a runtime-specific model via the adapter for your
-   environment (`adapters/claude.yaml`, `adapters/codex-gpt-5.6.yaml`,
-   `adapters/cursor-gpt-5.6.yaml`, …). See `spec/mapping-table.md` for the
-   cross-runtime equivalence table.
-3. Pass the adapter's `dispatch` value as an explicit `model` override on every
-   worker call.
+2. Resolve the tier through an adapter that matches the available worker
+   surface.
+3. Use an explicit override only when the surface supports it and the adapter
+   lists the value as available.
+4. If no compatible worker or override is available, keep the same block and
+   execute it sequentially in the lead session.
 
-Without an override, workers inherit the lead model — expensive and unnecessary
-for mechanical work.
+Capability tier and reasoning effort are separate decisions. A tier describes
+the capability required by the task; effort is an optional runtime control and
+must not change the tier classification.

@@ -1,43 +1,57 @@
 # Cross-runtime tier mapping
 
 Portable capability tiers (`spec/capability-tiers.md`) map to runtime-specific
-model slugs via `adapters/`. Model names never appear in the portable spec.
+models via `adapters/`. This file is the only cross-runtime model mapping.
 
 ## Tier equivalence
 
-| Portable tier | Claude (`adapters/claude.yaml`) | GPT-5.6 Codex (`adapters/codex-gpt-5.6.yaml`) | GPT-5.6 Cursor (`adapters/cursor-gpt-5.6.yaml`) |
-|---|---|---|---|
-| **Lead** (conductor) | main session | main session | main session |
-| **reasoning-high** | `opus` (alias: `fable`) | `gpt-5.6-sol` | `gpt-5.6-sol-medium` |
-| **balanced** | `sonnet` | `gpt-5.6-terra` | `gpt-5.6-terra-medium` |
-| **mechanical** | `haiku` | `gpt-5.6-luna` | `gpt-5.6-luna-medium` |
+| Portable tier | Claude Code | Cursor Claude | Codex GPT-5.6 | Cursor GPT-5.6 |
+|---|---|---|---|---|
+| **Lead** | main session | main session | main session | main session |
+| **reasoning-high** | `fable` (frontier/highest profile) or `opus` (high-reasoning profile) | `claude-fable-5-thinking-high` or `claude-opus-4-8-thinking-high` | `gpt-5.6-sol` | `gpt-5.6-sol-xhigh` |
+| **balanced** | `sonnet` | `claude-sonnet-5-thinking-high` | `gpt-5.6-terra` | `gpt-5.6-terra-medium` |
+| **mechanical** | `sonnet` fallback or lead sequentially | `claude-sonnet-5-thinking-high` fallback or lead sequentially | `gpt-5.6-luna` | `gpt-5.6-terra-medium` fallback or lead sequentially |
 
 Escalation order (all runtimes): `mechanical` → `balanced` → `reasoning-high`.
 
-## What GPT-5.6 tiers mean
+## Claude profiles are distinct
 
-OpenAI launched GPT-5.6 on 2026-07-09 as a three-tier model family:
+- `fable` and `opus` are separate Claude Code aliases for separate models.
+  Neither is an alias for the other.
+- Fable is mapped to the frontier/highest profile.
+- Opus is mapped to the high-reasoning profile.
+- Both satisfy the portable `reasoning-high` capability class, but the mapping
+  does not claim that they are equivalent.
+- Cursor Claude uses the full model slugs exposed by the Cursor subagent schema;
+  it does not reuse Claude Code aliases.
 
-- **Sol** — flagship; frontier agentic coding, long-horizon work, max/ultra reasoning.
-- **Terra** — balanced everyday tier; competitive with GPT-5.5 at lower cost.
-- **Luna** — fastest, most affordable; volume/mechanical workloads.
+## GPT-5.6 tier and effort
 
-The number (5.6) is the generation. Sol/Terra/Luna are durable capability tiers
-that can advance independently. Sources: [OpenAI announcement](https://openai.com/index/gpt-5-6/),
-[OpenAI API model guidance](https://developers.openai.com/api/docs/guides/latest-model).
+Dirigent routes Codex by model tier. Reasoning effort is a separate runtime
+control and never changes the portable capability classification.
 
-## Tier vs reasoning effort (GPT-5.6 only)
+| Codex model | Default effort | Locally exposed efforts |
+|---|---|---|
+| `gpt-5.6-sol` | `low` | `low`, `medium`, `high`, `xhigh`, `max`, `ultra` |
+| `gpt-5.6-terra` | `medium` | `low`, `medium`, `high`, `xhigh`, `max`, `ultra` |
+| `gpt-5.6-luna` | `medium` | `low`, `medium`, `high`, `xhigh`, `max` |
 
-GPT-5.6 separates **model tier** (sol/terra/luna) from **reasoning effort**
-(`none`, `low`, `medium`, `high`, `xhigh`, `max`, `ultra`). Dirigent routes by
-tier; effort stays at runtime defaults unless the lead session explicitly raises
-it for a hard block.
+`none` is not exposed for these models in the local Codex metadata. `ultra` is
+not exposed for Luna.
 
-Cursor's `*-medium` slugs are composite model ids (tier + default effort preset),
-not a separate tier.
+Cursor model identifiers are treated as complete, opaque slugs. The current
+Cursor subagent schema exposes only `gpt-5.6-sol-xhigh` and
+`gpt-5.6-terra-medium` from this family; no Luna slug is inferred.
 
-## Claude tier notes
+## Verification basis
 
-- `fable` is an extended-thinking alias at the reasoning-high tier (analogous
-  role to sol + high reasoning).
-- `opus` / `sonnet` / `haiku` are the default Claude Code dispatch overrides.
+The versioned snapshot in `tests/fixtures/runtime-models.json` records the local
+evidence used by the contract tests:
+
+- Cursor subagent schema available on 2026-07-10;
+- Claude Code `2.1.185` `--help` alias examples;
+- `~/.codex/models_cache.json` read on 2026-07-10.
+
+The fixture is an allowlist snapshot, not a claim that unlisted future models do
+not exist. Update the fixture and adapters together after fresh local
+verification.

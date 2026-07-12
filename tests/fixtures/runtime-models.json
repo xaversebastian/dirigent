@@ -1,0 +1,60 @@
+{
+  "verified_at": "2026-07-10",
+  "cursor": {
+    "source": "live Cursor subagent schema",
+    "gpt_5_6": [
+      "gpt-5.6-sol-xhigh",
+      "gpt-5.6-terra-medium"
+    ],
+    "claude": [
+      "claude-fable-5-thinking-high",
+      "claude-opus-4-8-thinking-high",
+      "claude-sonnet-5-thinking-high"
+    ]
+  },
+  "claude_code": {
+    "source": "Claude Code 2.1.185 --help alias examples",
+    "aliases": [
+      "fable",
+      "opus",
+      "sonnet"
+    ]
+  },
+  "codex": {
+    "source": "~/.codex/models_cache.json",
+    "models": {
+      "gpt-5.6-sol": {
+        "default_effort": "low",
+        "efforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max",
+          "ultra"
+        ]
+      },
+      "gpt-5.6-terra": {
+        "default_effort": "medium",
+        "efforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max",
+          "ultra"
+        ]
+      },
+      "gpt-5.6-luna": {
+        "default_effort": "medium",
+        "efforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ]
+      }
+    }
+  }
+}

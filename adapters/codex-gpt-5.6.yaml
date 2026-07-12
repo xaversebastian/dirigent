@@ -2,10 +2,8 @@
 # Maps portable capability tiers to Codex model slugs.
 # Verified against ~/.codex/models_cache.json (2026-07-10).
 #
-# Tier (sol/terra/luna) is separate from reasoning effort (low..ultra).
-# Codex canonical slugs omit the effort suffix; set effort via Codex config
-# or per-request reasoning settings. Cursor uses composite *-medium slugs —
-# see adapters/cursor-gpt-5.6.yaml.
+# Model tier is separate from reasoning effort. Codex canonical slugs omit an
+# effort suffix; effort is configured independently when the runtime supports it.
 
 runtime: codex
 family: gpt-5.6
@@ -15,28 +13,54 @@ tiers:
   reasoning-high:
     dispatch: gpt-5.6-sol
     label: Sol
-    notes: >
-      Frontier agentic coding model (Codex priority 1). Supports reasoning
-      effort low through ultra. Default reasoning level: low.
+    notes: Frontier agentic coding model.
 
   balanced:
     dispatch: gpt-5.6-terra
     label: Terra
-    notes: >
-      Balanced agentic coding model for everyday work (priority 2). Default
-      reasoning level: medium.
+    notes: Balanced agentic coding model for everyday work.
 
   mechanical:
     dispatch: gpt-5.6-luna
     label: Luna
-    notes: >
-      Fast, affordable agentic coding model (priority 3). Default reasoning
-      level: medium. No ultra effort on this tier.
+    notes: Fast agentic coding model for mechanical work.
 
 dispatch:
   parameter: model
+  override: supported
   allowed:
     - gpt-5.6-sol
     - gpt-5.6-terra
     - gpt-5.6-luna
   explore_default: gpt-5.6-terra
+
+reasoning_effort:
+  parameter: reasoning_effort
+  independent_from_tier: true
+  models:
+    gpt-5.6-sol:
+      default: low
+      allowed:
+        - low
+        - medium
+        - high
+        - xhigh
+        - max
+        - ultra
+    gpt-5.6-terra:
+      default: medium
+      allowed:
+        - low
+        - medium
+        - high
+        - xhigh
+        - max
+        - ultra
+    gpt-5.6-luna:
+      default: medium
+      allowed:
+        - low
+        - medium
+        - high
+        - xhigh
+        - max

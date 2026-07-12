@@ -1,8 +1,8 @@
 # PROJECT_STRUCTURE.md - dirigent
 
-`dirigent` is a small OSS repo for a Claude Code skill. The skill routes
-non-trivial work across model tiers, while this repo's maintenance surface must
-remain file-first and usable by Codex or local LLM agents.
+`dirigent` is a small OSS repo for a portable orchestration skill. The skill
+routes non-trivial work across capability tiers, while this repo's maintenance
+surface remains file-first and usable across agent runtimes.
 
 ## Start Here
 
@@ -10,7 +10,7 @@ remain file-first and usable by Codex or local LLM agents.
 2. `PROJECT_STRUCTURE.md` - this file index.
 3. `AGENT_HANDOFF.md` - current status and open points.
 4. `README.md` - public overview and install notes.
-5. `SKILL.md` - distributed Claude Code skill doctrine.
+5. `SKILL.md` - distributed portable skill doctrine.
 
 ## Tree
 
@@ -23,15 +23,19 @@ dirigent/
 |-- README.md                 # Public overview and install guide
 |-- SKILL.md                  # Distributed skill doctrine (entry point)
 |-- adapters/
-|   |-- claude.yaml              # Claude Code: opus / sonnet / haiku
-|   |-- codex-gpt-5.6.yaml       # Codex: gpt-5.6-sol / terra / luna
-|   `-- cursor-gpt-5.6.yaml    # Cursor Task: gpt-5.6-*-medium slugs
+|   |-- claude-code.yaml       # Claude Code aliases only
+|   |-- cursor-claude.yaml     # Cursor-exposed Claude slugs only
+|   |-- codex-gpt-5.6.yaml     # Codex model + independent effort mapping
+|   `-- cursor-gpt-5.6.yaml    # Exact Cursor GPT slugs + fallback
 |-- spec/
 |   |-- capability-tiers.md    # Portable capability tier definitions
 |   `-- mapping-table.md       # Cross-runtime tier equivalence
 `-- tests/
-    |-- agent-surface-test.sh  # Verifies required agent surfaces
-    `-- adapter-test.sh        # Verifies adapter + spec structure
+    |-- agent-surface-test.sh  # Verifies OSS or payload-only surfaces
+    |-- adapter-test.sh        # Shell entrypoint for adapter checks
+    |-- contract-test.py       # Parses adapters + workflow contracts
+    `-- fixtures/
+        `-- runtime-models.json # Versioned local availability allowlist
 ```
 
 ## Ownership Boundaries
@@ -65,6 +69,7 @@ Focused checks:
 ```bash
 tests/agent-surface-test.sh
 tests/adapter-test.sh
+python3 tests/contract-test.py
 ```
 
 If shell scripts are added or edited, run `bash -n` on the changed scripts.

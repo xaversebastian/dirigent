@@ -1,0 +1,33 @@
+# Cursor Claude subagent adapter
+# Verified against the Cursor subagent schema available on 2026-07-10.
+
+runtime: cursor
+provider: anthropic
+description: Cursor-exposed Claude models for subagent dispatch
+
+tiers:
+  reasoning-high:
+    dispatch: claude-fable-5-thinking-high
+    profile: frontier-highest
+    alternatives:
+      high-reasoning: claude-opus-4-8-thinking-high
+    notes: Fable and Opus are distinct models in the same high capability class.
+
+  balanced:
+    dispatch: claude-sonnet-5-thinking-high
+    profile: balanced
+
+  mechanical:
+    dispatch: claude-sonnet-5-thinking-high
+    profile: balanced-fallback
+    fallback: lead-sequential
+    notes: Cursor exposes no lower Claude model in the verified schema.
+
+dispatch:
+  parameter: model
+  override: supported
+  allowed:
+    - claude-fable-5-thinking-high
+    - claude-opus-4-8-thinking-high
+    - claude-sonnet-5-thinking-high
+  explore_default: claude-sonnet-5-thinking-high

@@ -1,42 +1,33 @@
 # Cursor Task-tool runtime adapter
 # Maps portable capability tiers to Cursor subagent model slugs.
-# Cursor exposes composite slugs with a baked-in default effort suffix.
+# Verified against the Cursor subagent schema available on 2026-07-10.
+# Treat exposed identifiers as complete slugs; do not infer missing variants.
 
 runtime: cursor
 family: gpt-5.6
-description: GPT-5.6 Sol / Terra / Luna for Cursor Task subagent dispatch
+description: Cursor-exposed GPT-5.6 models for subagent dispatch
 
 tiers:
   reasoning-high:
-    dispatch: gpt-5.6-sol-medium
+    dispatch: gpt-5.6-sol-xhigh
     label: Sol
-    aliases:
-      - gpt-5.6-sol
-    notes: >
-      Frontier tier. `gpt-5.6-sol-medium` is the Cursor Task slug; it maps to
-      the Sol model family with a default effort preset.
+    notes: Frontier profile using the exact Cursor-exposed slug.
 
   balanced:
     dispatch: gpt-5.6-terra-medium
     label: Terra
-    aliases:
-      - gpt-5.6-terra
     notes: Balanced everyday tier for standard implementation blocks.
 
   mechanical:
-    dispatch: gpt-5.6-luna-medium
-    label: Luna
-    aliases:
-      - gpt-5.6-luna
-    notes: Fast, affordable tier for mechanical sweeps and status checks.
+    dispatch: gpt-5.6-terra-medium
+    label: Terra fallback
+    fallback: lead-sequential
+    notes: No Luna slug is exposed; use Terra or execute sequentially in the lead.
 
 dispatch:
   parameter: model
+  override: supported
   allowed:
-    - gpt-5.6-sol-medium
+    - gpt-5.6-sol-xhigh
     - gpt-5.6-terra-medium
-    - gpt-5.6-luna-medium
-    - gpt-5.6-sol
-    - gpt-5.6-terra
-    - gpt-5.6-luna
   explore_default: gpt-5.6-terra-medium

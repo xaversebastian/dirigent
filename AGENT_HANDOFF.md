@@ -106,3 +106,34 @@ For substantial work, append:
 - **Open points:** Push still pending (`main` ahead of origin). vaoa-os + siljajanina commits separate.
 - **Uncertain assumptions:** Engine `agent-surface-test.sh` expects full OSS repo root (AGENTS.md) — run surface tests from oss only.
 - **Alternatives rejected:** Symlink to engine copy instead of oss (rejected — oss is publish SoT).
+
+### 2026-07-10 - Cursor - review fixes and verified rollout
+
+- **Goal:** Implement the confirmed read-only review findings in the OSS
+  Dirigent source of truth and roll the corrected payload to Engine and Silja
+  without touching foreign dirty changes or Git history.
+- **Changed paths:**
+  - OSS: `SKILL.md`, `README.md`, `PROJECT_STRUCTURE.md`,
+    `spec/{capability-tiers,mapping-table}.md`, `adapters/`,
+    `tests/{agent-surface-test.sh,adapter-test.sh,contract-test.py,fixtures/}`,
+    `AGENT_HANDOFF.md`.
+  - Engine: `engine/skills/dirigent/**`,
+    `engine/scripts/silja-vendor.manifest`, `PROJECT_STRUCTURE.md`.
+  - Silja: `.claude/skills/dirigent/**`, `PROJECT_STRUCTURE.md`.
+- **Checks run:** Local Cursor subagent schema, Claude Code `2.1.185 --help`,
+  and `~/.codex/models_cache.json` verified the allowlists; `bash -n`,
+  agent-surface, adapter, and Python contract tests passed in OSS, Engine, and
+  Silja; all 11 intended payload files were byte-identical across all three
+  locations; the global skill symlink resolved to `~/dev/oss/dirigent`.
+- **Open points:** No commit or push was performed. Silja commit `98d1496`
+  remains an intentionally untouched mixed commit and therefore a
+  release/review risk. The full `vendor-silja.sh` was not run because it would
+  also overwrite foreign dirty hook files; only the Dirigent payload was
+  updated, while the manifest now lists the complete future payload.
+- **Uncertain assumptions:** Runtime availability can change; refresh
+  `tests/fixtures/runtime-models.json` and adapters together after fresh local
+  verification.
+- **Alternatives rejected:** No invented Cursor Luna slug, no combined
+  Claude-Code/Cursor-Claude adapter, no fabricated worker evidence, no full
+  vendor run over foreign changes, no reset/rebase/amend, and no modification
+  of the mixed Silja commit.

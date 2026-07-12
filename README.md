@@ -1,31 +1,35 @@
 # dirigent
 
-A skill that turns your main session into a **conductor**: it plans a task, classifies each
-piece by capability tier, dispatches workers on the cheapest tier that won't lose quality, and
-reviews every result before it counts as done.
+A portable orchestration skill that turns the main session into a
+**conductor**. Non-trivial work follows:
 
-The idea is simple — most multi-step work is a mix of hard parts and mechanical parts. Running
-the whole thing on your top model is wasteful; running it all on a cheap model loses quality.
-`dirigent` makes the split explicit and adds a review gate so the downgrades stay safe.
+**Research → Plan → Act → Review**
+
+The lead researches the real state, decomposes the goal into evidence-bearing
+task blocks, routes eligible work by capability, and reviews every result before
+it counts as done.
 
 ## What it gives you
 
 - A **portable capability matrix** (lead / reasoning-high / balanced / mechanical) in
   [`spec/capability-tiers.md`](spec/capability-tiers.md).
-- **Runtime adapters** that map tiers to concrete model slugs — Claude
-  ([`adapters/claude.yaml`](adapters/claude.yaml): opus/fable, sonnet, haiku), Codex GPT-5.6
-  ([`adapters/codex-gpt-5.6.yaml`](adapters/codex-gpt-5.6.yaml): sol, terra, luna), and
-  Cursor Task GPT-5.6 ([`adapters/cursor-gpt-5.6.yaml`](adapters/cursor-gpt-5.6.yaml):
-  `*-medium` slugs).
-- A **dispatch discipline**: explicit `model` overrides, parallel independent blocks, full
-  context in every worker prompt.
+- **Separate runtime adapters** for each execution surface. Concrete mappings
+  and their local verification basis live only in `adapters/` and
+  [`spec/mapping-table.md`](spec/mapping-table.md).
+- A **dispatch discipline**: supported overrides only, complete worker context,
+  and parallel execution only for disjoint write scopes or read-only blocks.
+- A **sequential fallback**: if no compatible worker or override is available,
+  the lead executes the same plan without fabricating worker results.
 - An **escalation rule** instead of blind retries (weak result → re-dispatch one tier up).
-- A **review gate**: the lead session checks each worker output against the plan before
-  accepting it — this is what makes routing cheaper models safe.
+- An **operational review gate**: every block has acceptance criteria and a done
+  criterion; the lead checks tests, logs, paths, scope, side effects, and risks.
 
 See [SKILL.md](SKILL.md) for the full doctrine.
 
 ## Install
+
+Install the repository in the skill directory documented by the target runtime.
+For Claude Code:
 
 ```bash
 git clone https://github.com/xaversebastian/dirigent.git ~/.claude/skills/dirigent
@@ -33,12 +37,17 @@ git clone https://github.com/xaversebastian/dirigent.git ~/.claude/skills/dirige
 
 Then invoke it by name when you start a non-trivial task, or auto-inject it at session start
 via a `SessionStart` hook in `~/.claude/settings.json` (see the "Installing" section in
-[SKILL.md](SKILL.md)).
+[SKILL.md](SKILL.md)). Other runtimes should use their own skill location and
+invocation mechanism; an adapter does not imply hook support.
 
 ## Notes
 
-- Capability tiers are runtime-agnostic; model slugs live in `adapters/`. See
-  [`spec/mapping-table.md`](spec/mapping-table.md) for Claude ↔ GPT-5.6 equivalence.
+- Capability tiers and workflow rules are runtime-neutral. Concrete model names
+  are isolated to adapters and the explicit mapping document.
+- Adapter availability is checked against the versioned local-evidence fixture
+  in `tests/fixtures/runtime-models.json`.
+- The distributed surface test works both in this OSS repo and in payload-only
+  mirrors that intentionally omit maintenance files.
 - This is a routing layer, not an execution framework. It composes with whatever
   test/review/planning skills you already use rather than replacing them.
 
