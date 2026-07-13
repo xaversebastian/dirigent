@@ -1,8 +1,8 @@
 # AGENTS.md - dirigent
 
 This file is the tool-agnostic maintenance contract for this repo. The product
-itself is a Claude Code skill, but repo work must not require Claude runtime
-features.
+itself is a portable runtime-neutral skill, so repo work must not require any
+single tool runtime.
 
 ## Session Start
 
@@ -22,9 +22,9 @@ features.
 
 ## Agent Roles
 
-- Codex is the default coding agent for small, reviewable repo changes.
-- Claude is optional for reviewing, using, or evolving the Claude Code skill
-  itself.
+- Codex is the default coding agent for complete, clearly scoped reversible
+  repo tasks; task size alone does not require another tool.
+- Claude is an optional adapter for reviewing or using the portable skill.
 - A local LLM must be able to work from files in this order:
   `AGENTS.md` -> `PROJECT_STRUCTURE.md` -> `AGENT_HANDOFF.md` -> `README.md`
   -> `SKILL.md`.
@@ -36,7 +36,7 @@ features.
 - Do not write to `~/.claude`, install the skill there, or publish releases
   without explicit user approval. Confirmed `non_prod` pushes are allowed;
   classify unknown push effects first and withhold auto-production pushes.
-- Keep changes small and targeted. Preserve the distinction between product
+- Keep changes scoped and atomic. Preserve the distinction between product
   guidance in `SKILL.md` and maintenance guidance in this file.
 - Do not add generated artifacts, credentials, private data, or local runtime
   state.
