@@ -249,7 +249,9 @@ def validate_skill_workflow() -> None:
         "risks",
         "executes the unchanged plan sequentially",
         "never fabricates",
-        "write scopes are disjoint",
+        "exactly one writer per canonical worktree",
+        "read/owned/forbidden paths",
+        "disjoint foreign dirt",
         "read-only",
     ]
     lower = " ".join(text.lower().split())

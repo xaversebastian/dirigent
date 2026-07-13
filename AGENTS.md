@@ -33,8 +33,9 @@ features.
 
 - Do not assume `SessionStart`, Claude memory, Claude hooks, subagents, MCP, or
   cloud memory are available for repo maintenance.
-- Do not write to `~/.claude`, install the skill, publish releases, or push
-  without explicit user approval.
+- Do not write to `~/.claude`, install the skill there, or publish releases
+  without explicit user approval. Confirmed `non_prod` pushes are allowed;
+  classify unknown push effects first and withhold auto-production pushes.
 - Keep changes small and targeted. Preserve the distinction between product
   guidance in `SKILL.md` and maintenance guidance in this file.
 - Do not add generated artifacts, credentials, private data, or local runtime
@@ -52,7 +53,7 @@ For shell edits, also run `bash -n` on changed shell scripts.
 
 ## Handoff Updates
 
-For substantial work, append to `AGENT_HANDOFF.md` with:
+Append only for durable cross-session state, open gates, or a real handoff:
 
 - Date, tool, one-line goal
 - Changed paths

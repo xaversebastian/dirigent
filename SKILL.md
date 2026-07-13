@@ -60,20 +60,23 @@ mappings live in `adapters/` and are summarised in `spec/mapping-table.md`.
 
 ### Parallel safety
 
-Independent blocks should run in parallel only when their write scopes are
-disjoint or every parallel block is read-only. Shared files, overlapping paths,
-handoffs, indexes, and integration steps are serial lead-session work.
+Independent native blocks may run in parallel in different repos or separate
+worktrees, with exactly one writer per canonical worktree. Assign explicit
+read/owned/forbidden paths and a single integration owner. Shared files,
+overlapping paths, handoffs, indexes, and integration steps are serialized by
+that owner; disjoint foreign dirt is preserved by digest.
 
 ### No-worker fallback
 
 If no worker tool, compatible model, or supported override is available, the
-lead session executes the unchanged plan sequentially. It records its own
+orchestrator executes the unchanged plan sequentially. It records its own
 evidence and never fabricates worker calls, worker findings, or unavailable
 model results.
 
 ## Review gate
 
-A task block counts as done only when the lead session checks:
+A task block counts as done only when the assigned verifier or orchestrator
+checks:
 
 1. every acceptance criterion against concrete evidence such as tests,
    command logs, changed paths, generated artefacts, or cited source lines;
@@ -91,8 +94,10 @@ to the worker that produced the result.
   dispatch a block that writes through one of those symlinks with `isolation: worktree` — the
   worker commits through the symlink into the main tree. Only self-contained repos isolate
   cleanly.
-- **Go-gates unchanged:** push/deploy/migration still follow your normal confirmation rules —
-  the conductor presents finished, reviewed changes for the human to ship.
+- **Risk-based external effects:** confirmed `non_prod` pushes and local
+  migration tests may be completed by the assigned native worker. Classify
+  unknown push effects first; withhold auto-production pushes, production
+  migrations, provider writes and other irreversible effects for approval.
 
 ## Installing
 
