@@ -19,6 +19,7 @@ ADAPTERS = {
     "cursor_claude": ROOT / "adapters/cursor-claude.yaml",
     "codex": ROOT / "adapters/codex-gpt-5.6.yaml",
     "cursor_gpt": ROOT / "adapters/cursor-gpt-5.6.yaml",
+    "cursor_grok": ROOT / "adapters/cursor-grok-composer.yaml",
 }
 
 
@@ -147,6 +148,17 @@ def validate_adapters() -> None:
         list(fixture["codex"]["models"]),
         "Codex allowlist",
     )
+    grok_allowed = set(parsed["cursor_grok"]["dispatch"]["allowed"])
+    for model in fixture["cursor"]["grok"] + fixture["cursor"]["composer"]:
+        if model not in grok_allowed:
+            fail(f"cursor_grok missing catalog model {model}")
+    if "auto" not in grok_allowed:
+        fail("cursor_grok must allow auto fallback")
+    require_equal(
+        parsed["cursor_grok"]["tiers"]["lead"]["dispatch"],
+        "cursor-grok-4.5-high",
+        "Cursor preferred lead",
+    )
 
     claude_high = parsed["claude_code"]["tiers"]["reasoning-high"]
     require_equal(claude_high["dispatch"], "fable", "Claude Code frontier profile")
@@ -165,17 +177,14 @@ def validate_adapters() -> None:
     cursor_mechanical = parsed["cursor_gpt"]["tiers"]["mechanical"]
     require_equal(
         cursor_mechanical["dispatch"],
-        "gpt-5.6-terra-medium",
-        "Cursor mechanical fallback model",
+        "gpt-5.6-luna-medium",
+        "Cursor mechanical Luna model",
     )
     require_equal(
         cursor_mechanical["fallback"],
         "lead-sequential",
         "Cursor mechanical sequential fallback",
     )
-    if "gpt-5.6-luna" in ADAPTERS["cursor_gpt"].read_text(encoding="utf-8").lower():
-        fail("Cursor adapter must not invent a Luna slug")
-
     effort = parsed["codex"]["reasoning_effort"]
     require_equal(effort["independent_from_tier"], True, "Codex tier/effort split")
     for model, expected in fixture["codex"]["models"].items():

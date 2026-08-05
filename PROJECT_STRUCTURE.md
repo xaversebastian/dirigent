@@ -26,7 +26,8 @@ dirigent/
 |   |-- claude-code.yaml       # Claude Code aliases only
 |   |-- cursor-claude.yaml     # Cursor-exposed Claude slugs only
 |   |-- codex-gpt-5.6.yaml     # Codex model + independent effort mapping
-|   `-- cursor-gpt-5.6.yaml    # Exact Cursor GPT slugs + fallback
+|   |-- cursor-gpt-5.6.yaml    # Exact Cursor GPT slugs + fallback
+|   `-- cursor-grok-composer.yaml # Preferred lead Grok + Composer mechanical
 |-- spec/
 |   |-- capability-tiers.md    # Portable capability tier definitions
 |   `-- mapping-table.md       # Cross-runtime tier equivalence
@@ -42,6 +43,8 @@ dirigent/
 
 - Product behavior lives in `SKILL.md`, with portable tier definitions in `spec/` and
   runtime model slugs in `adapters/`.
+- Environment-specific session routers (e.g. MFC C01–C14) live in that
+  environment's control-plane, not here.
 - Public positioning and install instructions live in `README.md`.
 - Agent maintenance rules live in `AGENTS.md`.
 - Current repo state lives in `AGENT_HANDOFF.md`.

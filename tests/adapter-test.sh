@@ -55,7 +55,13 @@ require_text "adapters/codex-gpt-5.6.yaml" "independent_from_tier: true"
 
 require_text "adapters/cursor-gpt-5.6.yaml" "^[[:space:]]+dispatch: gpt-5\\.6-sol-xhigh$"
 require_text "adapters/cursor-gpt-5.6.yaml" "^[[:space:]]+dispatch: gpt-5\\.6-terra-medium$"
+require_text "adapters/cursor-gpt-5.6.yaml" "^[[:space:]]+dispatch: gpt-5\\.6-luna-medium$"
 require_text "adapters/cursor-gpt-5.6.yaml" "fallback: lead-sequential"
+
+require_file "adapters/cursor-grok-composer.yaml"
+require_text "adapters/cursor-grok-composer.yaml" "^[[:space:]]+dispatch: cursor-grok-4\\.5-high$"
+require_text "adapters/cursor-grok-composer.yaml" "^[[:space:]]+dispatch: composer-2\\.5-fast$"
+
 
 # Portable core and executable contract
 require_text "SKILL.md" "reasoning-high"

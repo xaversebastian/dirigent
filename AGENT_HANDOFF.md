@@ -137,3 +137,14 @@ For substantial work, append:
   Claude-Code/Cursor-Claude adapter, no fabricated worker evidence, no full
   vendor run over foreign changes, no reset/rebase/amend, and no modification
   of the mixed Silja commit.
+
+## 2026-08-05 · Cursor · session work-types
+- Added spec/work-types.md, path-recipes.md, review-policy.md; cursor-grok-composer adapter; refreshed Cursor adapters/fixture to agent --list-models.
+- Synced via symlink ~/.claude/skills/dirigent -> oss/dirigent.
+- Checks: tests/adapter-test.sh OK.
+- Open: Task-tool enum vs full CLI catalog still diverge; lead_local_gated profile not yet a named mfc-dispatch profile.
+
+## 2026-08-05 · Cursor · consolidate session router out of Dirigent
+- Removed MFC-specific work-types/path-recipes/review-policy (now mfc-control-plane/contracts/session-routing/).
+- Kept portable adapters including cursor-grok-composer.yaml + refreshed fixture.
+- Checks: tests/adapter-test.sh OK.

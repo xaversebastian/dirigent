@@ -1,7 +1,5 @@
-# Cursor Task-tool runtime adapter
-# Maps portable capability tiers to Cursor subagent model slugs.
-# Verified against the Cursor subagent schema available on 2026-07-10.
-# Treat exposed identifiers as complete slugs; do not infer missing variants.
+# Cursor Task-tool / agent GPT-5.6 adapter
+# Verified against agent --list-models on 2026-08-05.
 
 runtime: cursor
 family: gpt-5.6
@@ -19,15 +17,19 @@ tiers:
     notes: Balanced everyday tier for standard implementation blocks.
 
   mechanical:
-    dispatch: gpt-5.6-terra-medium
-    label: Terra fallback
+    dispatch: gpt-5.6-luna-medium
+    label: Luna
     fallback: lead-sequential
-    notes: No Luna slug is exposed; use Terra or execute sequentially in the lead.
+    notes: Luna is available in the 2026-08-05 catalog (fixture updated).
 
 dispatch:
   parameter: model
   override: supported
   allowed:
     - gpt-5.6-sol-xhigh
+    - gpt-5.6-sol-high
     - gpt-5.6-terra-medium
+    - gpt-5.6-terra-high
+    - gpt-5.6-luna-medium
+    - gpt-5.6-luna-high
   explore_default: gpt-5.6-terra-medium
