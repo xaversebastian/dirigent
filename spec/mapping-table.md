@@ -8,7 +8,7 @@ models via `adapters/`. This file is the only cross-runtime model mapping.
 | Portable tier | Claude Code | Cursor Claude | Codex GPT-5.6 | Cursor GPT-5.6 | Cursor Grok/Composer |
 |---|---|---|---|---|---|
 | **Lead** | main session | main session | main session | main session | `cursor-grok-4.5-high` (preferred) |
-| **reasoning-high** | `fable` or `opus` | `claude-fable-5-thinking-high` (alt: opus-5-thinking-medium) | `gpt-5.6-sol` | `gpt-5.6-sol-xhigh` | — |
+| **reasoning-high** | `opus` @ xhigh (fable = owner second opinion) | `claude-opus-5-thinking-xhigh` | `gpt-5.6-sol` | `gpt-5.6-sol-xhigh` | — |
 | **balanced** | `sonnet` | `claude-sonnet-5-thinking-high` | `gpt-5.6-terra` | `gpt-5.6-terra-medium` | — |
 | **mechanical** | `sonnet` fallback or lead sequential | `claude-sonnet-5-thinking-high` fallback or lead sequential | `gpt-5.6-luna` | `gpt-5.6-luna-medium` | `composer-2.5-fast` |
 
@@ -21,8 +21,8 @@ environment control-plane, not in this portable repo.
 
 - `fable` and `opus` are separate Claude Code aliases for separate models.
   Neither is an alias for the other.
-- Fable is mapped to the frontier/highest profile.
-- Opus is mapped to the high-reasoning profile.
+- Default `reasoning-high` dispatch is Opus (`--effort xhigh` when supported).
+- Fable remains available as an owner-manual second opinion, not the auto default.
 - Both satisfy the portable `reasoning-high` capability class, but the mapping
   does not claim that they are equivalent.
 - Cursor Claude uses the full model slugs exposed by the Cursor catalog;

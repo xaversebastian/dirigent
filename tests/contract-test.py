@@ -161,18 +161,24 @@ def validate_adapters() -> None:
     )
 
     claude_high = parsed["claude_code"]["tiers"]["reasoning-high"]
-    require_equal(claude_high["dispatch"], "fable", "Claude Code frontier profile")
+    require_equal(claude_high["dispatch"], "opus", "Claude Code default high profile")
+    require_equal(claude_high.get("effort"), "xhigh", "Claude Code default effort")
     require_equal(
-        claude_high["alternatives"]["high-reasoning"],
-        "opus",
-        "Claude Code high-reasoning profile",
+        claude_high["alternatives"]["owner-second-opinion"],
+        "fable",
+        "Claude Code owner second-opinion profile",
     )
-    if claude_high["dispatch"] == claude_high["alternatives"]["high-reasoning"]:
-        fail("Fable and Opus must remain distinct models")
+    if claude_high["dispatch"] == claude_high["alternatives"]["owner-second-opinion"]:
+        fail("Opus and Fable must remain distinct models")
 
     cursor_high = parsed["cursor_claude"]["tiers"]["reasoning-high"]
-    if cursor_high["dispatch"] == cursor_high["alternatives"]["high-reasoning"]:
-        fail("Cursor Fable and Opus must remain distinct models")
+    require_equal(
+        cursor_high["dispatch"],
+        "claude-opus-5-thinking-xhigh",
+        "Cursor Claude default high profile",
+    )
+    if cursor_high["dispatch"] == cursor_high["alternatives"]["owner-second-opinion"]:
+        fail("Cursor Opus and Fable must remain distinct models")
 
     cursor_mechanical = parsed["cursor_gpt"]["tiers"]["mechanical"]
     require_equal(

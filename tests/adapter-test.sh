@@ -40,12 +40,13 @@ require_file "adapters/codex-gpt-5.6.yaml"
 require_file "adapters/cursor-gpt-5.6.yaml"
 require_absent "adapters/claude.yaml"
 
-require_text "adapters/claude-code.yaml" "^[[:space:]]+dispatch: fable$"
-require_text "adapters/claude-code.yaml" "^[[:space:]]+high-reasoning: opus$"
+require_text "adapters/claude-code.yaml" "^[[:space:]]+dispatch: opus$"
+require_text "adapters/claude-code.yaml" "^[[:space:]]+effort: xhigh$"
+require_text "adapters/claude-code.yaml" "^[[:space:]]+owner-second-opinion: fable$"
 require_text "adapters/claude-code.yaml" "^[[:space:]]+dispatch: sonnet$"
 
-require_text "adapters/cursor-claude.yaml" "^[[:space:]]+dispatch: claude-fable-5-thinking-high$"
-require_text "adapters/cursor-claude.yaml" "^[[:space:]]+high-reasoning: claude-opus-4-8-thinking-high$"
+require_text "adapters/cursor-claude.yaml" "^[[:space:]]+dispatch: claude-opus-5-thinking-xhigh$"
+require_text "adapters/cursor-claude.yaml" "^[[:space:]]+owner-second-opinion: claude-fable-5-thinking-high$"
 require_text "adapters/cursor-claude.yaml" "^[[:space:]]+dispatch: claude-sonnet-5-thinking-high$"
 
 require_text "adapters/codex-gpt-5.6.yaml" "^[[:space:]]+dispatch: gpt-5\\.6-sol$"

@@ -8,13 +8,14 @@ description: Cursor-exposed Claude models for subagent dispatch
 
 tiers:
   reasoning-high:
-    dispatch: claude-fable-5-thinking-high
-    profile: frontier-highest
+    dispatch: claude-opus-5-thinking-xhigh
+    profile: high-reasoning
     alternatives:
-      high-reasoning: claude-opus-4-8-thinking-high
-      high-reasoning-opus5: claude-opus-5-thinking-medium
-      xhigh: claude-fable-5-thinking-xhigh
-    notes: Fable and Opus are distinct. Catalog labels Fable NO ZDR. Prefer fable-thinking-high.
+      owner-second-opinion: claude-fable-5-thinking-high
+      fable-xhigh: claude-fable-5-thinking-xhigh
+      opus-high: claude-opus-5-thinking-high
+      legacy-opus48: claude-opus-4-8-thinking-high
+    notes: "Default Cursor Anthropic worker is Opus 5 thinking xhigh. Fable is owner-manual second opinion, not the auto default."
 
   balanced:
     dispatch: claude-sonnet-5-thinking-high
@@ -30,11 +31,12 @@ dispatch:
   parameter: model
   override: supported
   allowed:
+    - claude-opus-5-thinking-xhigh
+    - claude-opus-5-thinking-high
+    - claude-opus-5-thinking-medium
+    - claude-opus-4-8-thinking-high
     - claude-fable-5-thinking-high
     - claude-fable-5-thinking-xhigh
-    - claude-opus-5-thinking-medium
-    - claude-opus-5-thinking-high
-    - claude-opus-4-8-thinking-high
     - claude-sonnet-5-thinking-high
     - claude-sonnet-5-thinking-xhigh
   explore_default: claude-sonnet-5-thinking-high

@@ -23,11 +23,12 @@
       "gpt-5.6-luna-high"
     ],
     "claude": [
+      "claude-opus-5-thinking-xhigh",
+      "claude-opus-5-thinking-high",
+      "claude-opus-5-thinking-medium",
+      "claude-opus-4-8-thinking-high",
       "claude-fable-5-thinking-high",
       "claude-fable-5-thinking-xhigh",
-      "claude-opus-5-thinking-medium",
-      "claude-opus-5-thinking-high",
-      "claude-opus-4-8-thinking-high",
       "claude-sonnet-5-thinking-high",
       "claude-sonnet-5-thinking-xhigh"
     ]
