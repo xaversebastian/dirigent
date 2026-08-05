@@ -6,11 +6,12 @@ description: Claude Code aliases for worker dispatch
 
 tiers:
   reasoning-high:
-    dispatch: fable
-    profile: frontier-highest
+    dispatch: opus
+    profile: high-reasoning
+    effort: xhigh
     alternatives:
-      high-reasoning: opus
-    notes: Fable and Opus are distinct models in the same high capability class.
+      owner-second-opinion: fable
+    notes: "Default high tier is Opus with --effort xhigh. Fable is owner-manual second opinion only. Fable and Opus are distinct models."
 
   balanced:
     dispatch: sonnet
