@@ -1,5 +1,6 @@
 # Cursor Claude subagent adapter
-# Verified against the Cursor subagent schema available on 2026-07-10.
+# Verified against agent --list-models on 2026-08-05 (this workspace account).
+# Task-tool enum may be a subset; prefer IDs present in both when unsure.
 
 runtime: cursor
 provider: anthropic
@@ -11,7 +12,9 @@ tiers:
     profile: frontier-highest
     alternatives:
       high-reasoning: claude-opus-4-8-thinking-high
-    notes: Fable and Opus are distinct models in the same high capability class.
+      high-reasoning-opus5: claude-opus-5-thinking-medium
+      xhigh: claude-fable-5-thinking-xhigh
+    notes: Fable and Opus are distinct. Catalog labels Fable NO ZDR. Prefer fable-thinking-high.
 
   balanced:
     dispatch: claude-sonnet-5-thinking-high
@@ -21,13 +24,17 @@ tiers:
     dispatch: claude-sonnet-5-thinking-high
     profile: balanced-fallback
     fallback: lead-sequential
-    notes: Cursor exposes no lower Claude model in the verified schema.
+    notes: Prefer Composer/Luna via other adapters for mechanical cost lane.
 
 dispatch:
   parameter: model
   override: supported
   allowed:
     - claude-fable-5-thinking-high
+    - claude-fable-5-thinking-xhigh
+    - claude-opus-5-thinking-medium
+    - claude-opus-5-thinking-high
     - claude-opus-4-8-thinking-high
     - claude-sonnet-5-thinking-high
+    - claude-sonnet-5-thinking-xhigh
   explore_default: claude-sonnet-5-thinking-high

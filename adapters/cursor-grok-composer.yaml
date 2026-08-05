@@ -1,0 +1,34 @@
+# Cursor Grok / Composer lead-adjacent adapter
+# Verified against agent --list-models on 2026-08-05.
+
+runtime: cursor
+provider: cursor-spacexai
+description: Preferred interactive lead (Grok) and EU/mechanical Composer lane
+
+tiers:
+  lead:
+    dispatch: cursor-grok-4.5-high
+    alternatives:
+      medium: cursor-grok-4.5-medium
+      low: cursor-grok-4.5-low
+      fast: cursor-grok-4.5-high-fast
+    notes: Bare cursor-grok-4.5 is not a catalog ID. Prefer high effort for nontrivial lead work.
+  mechanical:
+    dispatch: composer-2.5-fast
+    alternatives:
+      standard: composer-2.5
+    notes: Composer is EU automation / mechanical cost lane, not high-ambiguity lead.
+
+dispatch:
+  parameter: model
+  override: supported
+  allowed:
+    - cursor-grok-4.5-high
+    - cursor-grok-4.5-medium
+    - cursor-grok-4.5-low
+    - cursor-grok-4.5-high-fast
+    - cursor-grok-4.5-medium-fast
+    - cursor-grok-4.5-low-fast
+    - composer-2.5
+    - composer-2.5-fast
+    - auto

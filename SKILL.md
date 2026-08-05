@@ -34,6 +34,14 @@ After Review, synthesise the outcome, deviations, and open risks.
 No orchestration overhead for a direct question or a small single-file edit. The
 lead session acts and verifies directly.
 
+## Environment session routing
+
+Some environments (e.g. MFC control-plane) define a **session work-type layer**
+above these tiers. When that binding exists, classify the session there first,
+then map each stage onto the portable tiers below and resolve models via the
+environment binding + `adapters/`. Dirigent itself does not own environment-
+specific categories or write-authority profiles.
+
 ## Routing matrix (portable)
 
 Full tier definitions live in `spec/capability-tiers.md`. Concrete runtime
