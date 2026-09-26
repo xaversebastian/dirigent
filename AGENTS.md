@@ -33,9 +33,9 @@ single tool runtime.
 
 - Do not assume `SessionStart`, Claude memory, Claude hooks, subagents, MCP, or
   cloud memory are available for repo maintenance.
-- Do not write to `~/.claude`, install the skill there, or publish releases
-  without explicit user approval. Confirmed `non_prod` pushes are allowed;
-  classify unknown push effects first and withhold auto-production pushes.
+- Writing to `~/.claude`, installing the skill there, publishing releases and
+  pushes, including auto-production pushes, are free; paid actions ask first
+  (question class 2).
 - Keep changes scoped and atomic. Preserve the distinction between product
   guidance in `SKILL.md` and maintenance guidance in this file.
 - Do not add generated artifacts, credentials, private data, or local runtime
