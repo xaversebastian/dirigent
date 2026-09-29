@@ -1,5 +1,6 @@
 # Claude Code runtime adapter
-# Verified against Claude Code 2.1.185 --help on 2026-07-10.
+# Verified against Claude Code 2.1.261 --help on 2026-09-05.
+# Alias `fable` resolves to Claude Fable 5.1 (`claude-fable-5-1`).
 
 runtime: claude-code
 description: Claude Code aliases for worker dispatch
@@ -11,7 +12,7 @@ tiers:
     effort: xhigh
     alternatives:
       owner-second-opinion: fable
-    notes: "Default high tier is Opus with --effort xhigh. Fable is owner-manual second opinion only. Fable and Opus are distinct models."
+    notes: "Default high tier is Opus 5 with --effort xhigh. Fable 5.1 is owner-manual second opinion only. Fable and Opus are distinct models."
 
   balanced:
     dispatch: sonnet

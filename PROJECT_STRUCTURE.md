@@ -25,8 +25,8 @@ dirigent/
 |-- adapters/
 |   |-- claude-code.yaml       # Claude Code aliases only
 |   |-- cursor-claude.yaml     # Cursor-exposed Claude slugs only
-|   |-- codex-gpt-5.6.yaml     # Codex model + independent effort mapping
-|   |-- cursor-gpt-5.6.yaml    # Exact Cursor GPT slugs + fallback
+|   |-- codex-gpt-6.yaml       # Codex GPT-6 Astra + independent effort
+|   |-- cursor-gpt-6.yaml      # Stale Cursor GPT gap (no Astra slug; MFC unused)
 |   `-- cursor-grok-composer.yaml # Preferred lead Grok + Composer mechanical
 |-- spec/
 |   |-- capability-tiers.md    # Portable capability tier definitions

@@ -1,0 +1,47 @@
+# Codex GPT-6 runtime adapter
+# Maps portable capability tiers to Codex model slugs.
+# Verified against ~/.codex/models_cache.json (2026-09-05, client 0.153.4).
+#
+# GPT-6 Astra is a single family. Portable tiers share the slug and differ by
+# independent reasoning effort. Do not invent Sol/Terra/Luna successors.
+
+runtime: codex
+family: gpt-6
+description: OpenAI GPT-6 Astra for Codex subagent dispatch
+
+tiers:
+  reasoning-high:
+    dispatch: gpt-6-astra
+    label: Astra
+    notes: Frontier agentic coding model. Dispatch effort xhigh; interactive may use ultra.
+
+  balanced:
+    dispatch: gpt-6-astra
+    label: Astra
+    notes: Same slug; use effort high for everyday work.
+
+  mechanical:
+    dispatch: gpt-6-astra
+    label: Astra
+    notes: Same slug; use effort medium. No cheaper sibling model exists.
+
+dispatch:
+  parameter: model
+  override: supported
+  allowed:
+    - gpt-6-astra
+  explore_default: gpt-6-astra
+
+reasoning_effort:
+  parameter: reasoning_effort
+  independent_from_tier: true
+  models:
+    gpt-6-astra:
+      default: medium
+      allowed:
+        - low
+        - medium
+        - high
+        - xhigh
+        - max
+        - ultra

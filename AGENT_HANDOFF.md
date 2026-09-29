@@ -31,6 +31,28 @@ For substantial work, append:
 
 ## Chronological Log
 
+### 2026-09-05 · Cursor · GPT-6 Astra / Fable 5.1 adapter cutover
+
+- **Goal:** Replace GPT-5.6 Sol/Terra/Luna adapters with GPT-6 Astra; pin Fable 5.1 as owner-manual Cursor second opinion.
+- **Changed paths:**
+  - `adapters/codex-gpt-6.yaml` (new)
+  - `adapters/cursor-gpt-6.yaml` (new; stale catalog, MFC unused)
+  - `adapters/codex-gpt-5.6.yaml` (deleted)
+  - `adapters/cursor-gpt-5.6.yaml` (deleted)
+  - `adapters/claude-code.yaml`
+  - `adapters/cursor-claude.yaml`
+  - `spec/mapping-table.md`
+  - `PROJECT_STRUCTURE.md`
+  - `tests/adapter-test.sh`
+  - `tests/agent-surface-test.sh`
+  - `tests/contract-test.py`
+  - `tests/fixtures/runtime-models.json`
+- **Checks run:** `tests/adapter-test.sh`, `tests/agent-surface-test.sh` (pending in same session).
+- **Open points:** Cursor catalog still has no `gpt-6-astra` slugs; Cursor GPT adapter stays `lead-sequential`.
+- **Uncertain assumptions:** Codex PATH 0.153.4 and `models_cache.json` remain the local Astra evidence.
+- **Alternatives rejected:** Invented Cursor Astra slugs; keeping 5.6 files as a second truth; auto-dispatching Fable.
+
+
 ### 2026-07-01 - Codex - initial agent surfaces
 
 - **Goal:** Add file-first repo surfaces so Codex and local LLM agents can

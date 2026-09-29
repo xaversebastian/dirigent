@@ -17,8 +17,8 @@ FIXTURE = ROOT / "tests/fixtures/runtime-models.json"
 ADAPTERS = {
     "claude_code": ROOT / "adapters/claude-code.yaml",
     "cursor_claude": ROOT / "adapters/cursor-claude.yaml",
-    "codex": ROOT / "adapters/codex-gpt-5.6.yaml",
-    "cursor_gpt": ROOT / "adapters/cursor-gpt-5.6.yaml",
+    "codex": ROOT / "adapters/codex-gpt-6.yaml",
+    "cursor_gpt": ROOT / "adapters/cursor-gpt-6.yaml",
     "cursor_grok": ROOT / "adapters/cursor-grok-composer.yaml",
 }
 
@@ -140,7 +140,7 @@ def validate_adapters() -> None:
     )
     require_equal(
         parsed["cursor_gpt"]["dispatch"]["allowed"],
-        fixture["cursor"]["gpt_5_6"],
+        fixture["cursor"]["gpt_6"],
         "Cursor GPT allowlist",
     )
     require_equal(
@@ -183,8 +183,8 @@ def validate_adapters() -> None:
     cursor_mechanical = parsed["cursor_gpt"]["tiers"]["mechanical"]
     require_equal(
         cursor_mechanical["dispatch"],
-        "gpt-5.6-luna-medium",
-        "Cursor mechanical Luna model",
+        "lead-sequential",
+        "Cursor GPT mechanical fallback when no Astra slug exists",
     )
     require_equal(
         cursor_mechanical["fallback"],

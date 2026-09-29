@@ -1,5 +1,5 @@
 # Cursor Claude subagent adapter
-# Verified against agent --list-models on 2026-08-05 (this workspace account).
+# Verified against agent --list-models on 2026-09-05 (this workspace account).
 # Task-tool enum may be a subset; prefer IDs present in both when unsure.
 
 runtime: cursor
@@ -11,11 +11,11 @@ tiers:
     dispatch: claude-opus-5-thinking-xhigh
     profile: high-reasoning
     alternatives:
-      owner-second-opinion: claude-fable-5-thinking-high
-      fable-xhigh: claude-fable-5-thinking-xhigh
+      owner-second-opinion: claude-fable-5-1-thinking-high
+      fable-xhigh: claude-fable-5-1-thinking-xhigh
       opus-high: claude-opus-5-thinking-high
       legacy-opus48: claude-opus-4-8-thinking-high
-    notes: "Default Cursor Anthropic worker is Opus 5 thinking xhigh. Fable is owner-manual second opinion, not the auto default."
+    notes: "Default Cursor Anthropic worker is Opus 5 thinking xhigh. Fable 5.1 is owner-manual second opinion, not the auto default. MFC must not dispatch Claude via Cursor."
 
   balanced:
     dispatch: claude-sonnet-5-thinking-high
@@ -25,7 +25,7 @@ tiers:
     dispatch: claude-sonnet-5-thinking-high
     profile: balanced-fallback
     fallback: lead-sequential
-    notes: Prefer Composer/Luna via other adapters for mechanical cost lane.
+    notes: Prefer Composer via the grok-composer adapter for mechanical cost lane.
 
 dispatch:
   parameter: model
@@ -35,8 +35,8 @@ dispatch:
     - claude-opus-5-thinking-high
     - claude-opus-5-thinking-medium
     - claude-opus-4-8-thinking-high
-    - claude-fable-5-thinking-high
-    - claude-fable-5-thinking-xhigh
+    - claude-fable-5-1-thinking-high
+    - claude-fable-5-1-thinking-xhigh
     - claude-sonnet-5-thinking-high
     - claude-sonnet-5-thinking-xhigh
   explore_default: claude-sonnet-5-thinking-high

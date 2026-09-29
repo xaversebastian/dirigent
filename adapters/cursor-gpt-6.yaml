@@ -1,0 +1,36 @@
+# Cursor Task-tool / agent GPT adapter
+# Verified against agent --list-models on 2026-09-05.
+#
+# Live Cursor catalog has no gpt-6-astra slugs. This adapter records that gap.
+# Do not invent Cursor Astra IDs. MFC auto-routing must not use this adapter;
+# GPT work goes through Codex CLI (`gpt-6-astra`) only.
+
+runtime: cursor
+family: gpt-6
+description: Portable Cursor GPT adapter. Catalog has no Astra slugs as of 2026-09-05.
+mfc_auto_routing: forbidden
+status: stale_catalog
+notes: Observed Cursor GPT slugs remain GPT-5.6 only. They are not the current palette and must not be copied here.
+
+tiers:
+  reasoning-high:
+    dispatch: lead-sequential
+    fallback: lead-sequential
+    notes: No Cursor Astra slug. Do not invent one. MFC uses Codex CLI.
+
+  balanced:
+    dispatch: lead-sequential
+    fallback: lead-sequential
+    notes: No Cursor Astra slug.
+
+  mechanical:
+    dispatch: lead-sequential
+    fallback: lead-sequential
+    notes: Mechanical Cursor lane is Composer, not GPT.
+
+dispatch:
+  parameter: model
+  override: supported
+  allowed:
+    - lead-sequential
+  explore_default: lead-sequential
